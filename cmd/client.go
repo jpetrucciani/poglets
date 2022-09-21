@@ -55,7 +55,7 @@ func buildUpstreamMap(args string) (map[string]string, error) {
 
 	for k, v := range items {
 		hasScheme := (strings.HasPrefix(v, "http://") || strings.HasPrefix(v, "https://"))
-		if hasScheme == false {
+		if !hasScheme {
 			items[k] = fmt.Sprintf("http://%s", v)
 		}
 	}
@@ -70,9 +70,9 @@ func buildUpstreamMap(args string) (map[string]string, error) {
 // clientCmd represents the client sub command.
 var clientCmd = &cobra.Command{
 	Use:   "client",
-	Short: "Start the tunnel client.",
-	Long:  `Start the tunnel client.`,
-	Example: `  # Start a secure tunnel connection over the internet to forward a Node.js 
+	Short: "Start the poglets tunnel client.",
+	Long:  `Start the poglets tunnel client.`,
+	Example: `  # Start a secure tunnel connection over the internet to forward a
   # server running on port 3000
   poglets client \
   --url=wss://192.168.0.101 \
@@ -160,7 +160,8 @@ func runClient(cmd *cobra.Command, _ []string) error {
 	if len(url) == 0 {
 		return fmt.Errorf("--url is required")
 	}
-	if strings.HasPrefix(url, "ws://") == false && strings.HasPrefix(url, "wss://") == false {
+
+	if !strings.HasPrefix(url, "ws://") && !strings.HasPrefix(url, "wss://") {
 		return fmt.Errorf("--url should be prefixed with ws:// (insecure) or wss:// (secure)")
 	}
 
