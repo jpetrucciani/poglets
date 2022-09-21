@@ -1,0 +1,8 @@
+bin
+.vscode
+!poglets.go
+poglets
+poglets-linux
+poglets-darwin
+.direnv/
+result*

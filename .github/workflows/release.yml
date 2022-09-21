@@ -1,0 +1,28 @@
+on:
+  release:
+    types: [created]
+
+jobs:
+  releases-matrix:
+    name: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, darwin]
+        goarch: [arm64, amd64]
+    steps:
+      - uses: actions/checkout@v3
+      - name: get the version
+        id: get_version
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=COMMIT::${GITHUB_SHA}
+      - name: release
+        id: release
+        uses: wangyoucao577/go-release-action@v1.31
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          binary_name: 'poglets'
+          ldflags: '-X main.Version=${{ steps.get_version.outputs.VERSION }} -X main.GitCommit=${{ steps.get_version.outputs.COMMIT }}'
