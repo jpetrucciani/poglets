@@ -38,7 +38,7 @@ let
       pname = name;
       version = "0.0.1";
       src = ./.;
-      vendorSha256 = "sha256-Pra/yuEnkrsJNgEYpIX7fsf1vhQKFXTSb9bHVu8/3UM=";
+      vendorSha256 = "sha256-Hjdv2Fvl1S52CDs4TAR3Yt9pEFUIvs5N5sVhZY+Edzo=";
 
       ldflags = [
         "-s"
