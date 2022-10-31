@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -62,7 +61,7 @@ func runServer(cmd *cobra.Command, _ []string) error {
 
 	var token string
 	if len(tokenFile) > 0 {
-		fileData, err := ioutil.ReadFile(tokenFile)
+		fileData, err := os.ReadFile(tokenFile)
 		if err != nil {
 			return errors.Wrap(err, fmt.Sprintf("unable to load file: %s", tokenFile))
 		}
